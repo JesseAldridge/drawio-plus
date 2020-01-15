@@ -10,51 +10,24 @@ const unescape_ = require('unescape');
 const stem_words = require('./stem_words.js')
 
 
-function stringToBytes(str) {
-  let arr = new Array(str.length);
-
-  for (let i = 0; i < str.length; i++)
-    arr[i] = str.charCodeAt(i);
-
-  return arr;
-}
-
-function bytesToString(arr) {
-  let str = '';
-
-  for (let i = 0; i < arr.length; i++)
-    str += String.fromCharCode(arr[i]);
-
-  return str;
-}
-
 function diagram_xml_to_obj(document_html) {
   const doc_elem = cheerio.load(document_html);
   let name_to_diagram = {}
   doc_elem('diagram').each(function(diagram_index) {
     let diagram_elem = cheerio(this);
-    let diagram_text = diagram_elem.text();
+    // let diagram_text = diagram_elem.text();
     let diagram_name = diagram_elem.attr('name')
-    diagram_text = Buffer.from(diagram_text, 'base64');
-    try {
-      diagram_text = pako.inflateRaw(diagram_text);
-    } catch(err) {
-      console.log('error in inflateRaw');
-      return;
-    }
 
-    diagram_text = bytesToString(diagram_text);
+    // try {
+    //   diagram_text = decodeURIComponent(diagram_text);
+    // }
+    // catch(err) {
+    //   console.log('error in decodeURIComponent');
+    //   return;
+    // }
 
-    try {
-      diagram_text = decodeURIComponent(diagram_text);
-    }
-    catch(err) {
-      console.log('error in decodeURIComponent');
-      return;
-    }
-
-    diagram_text = unescape_(diagram_text);
-    diagram_text = pd.xml(diagram_text);
+    // diagram_text = unescape_(diagram_text);
+    // diagram_text = pd.xml(diagram_text);
 
     const diagram_obj = {
       cells: []
@@ -62,7 +35,7 @@ function diagram_xml_to_obj(document_html) {
     name_to_diagram[diagram_name] = diagram_obj
 
     const cells = diagram_obj.cells
-    cheerio.load(diagram_text)('mxCell').each(function(cell_index) {
+    diagram_elem.find('mxCell').each(function(cell_index) {
       const cell_elem = cheerio(this)
 
       // skip images
