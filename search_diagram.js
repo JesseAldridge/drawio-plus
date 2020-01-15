@@ -41,7 +41,9 @@ function search_diagram(inflated_dir_path, path_, query_terms, term_to_document_
     const tab_names = Object.keys(name_to_diagram)
     tab_names.forEach(function(tab_name) {
       tab = name_to_diagram[tab_name]
-      tab.cells.forEach(function(cell) {
+
+      for(let cell_id in tab.cell_id_to_cell) {
+        const cell = tab.cell_id_to_cell[cell_id]
         // tokens are stemmed during inflation
         const cell_tokens = cell.text.split(' ')
         let cell_match_count = 0
@@ -55,7 +57,7 @@ function search_diagram(inflated_dir_path, path_, query_terms, term_to_document_
             tab_to_matching_cells[tab_name] = []
           tab_to_matching_cells[tab_name].push(cell.text.substr(0, 80))
         }
-      })
+      }
     })
 
     if(term_frequency > 0) {

@@ -1,35 +1,40 @@
 {
   "Tab 1": {
-    "cells": [
-      {
-        "text": "thi is a test diagram",
+    "cell_id_to_cell": {
+      "i4sGg8bSkyUIFC7NJkLE-1": {
+        "text": "thy is a test diagram",
         "x": "284",
-        "y": "160"
+        "y": "160",
+        "last_modified": "2020-01-15T02:54:45.237Z"
       },
-      {
-        "text": "helper",
+      "i4sGg8bSkyUIFC7NJkLE-2": {
+        "text": "help",
         "x": "309",
-        "y": "228"
+        "y": "228",
+        "last_modified": "2020-01-15T02:53:38.937Z"
       }
-    ]
+    }
   },
   "Tab 2": {
-    "cells": [
-      {
+    "cell_id_to_cell": {
+      "MXRy82Ifvxj1utwsVIDY-2": {
         "text": "bar",
         "x": "278",
-        "y": "327"
+        "y": "327",
+        "last_modified": "2020-01-15T02:53:38.937Z"
       },
-      {
+      "MXRy82Ifvxj1utwsVIDY-3": {
         "text": "baz",
         "x": "392",
-        "y": "321"
+        "y": "321",
+        "last_modified": "2020-01-15T02:53:38.937Z"
       },
-      {
-        "text": "xyz",
+      "MXRy82Ifvxj1utwsVIDY-4": {
+        "text": "xys",
         "x": "455",
-        "y": "288"
+        "y": "288",
+        "last_modified": "2020-01-15T02:53:38.938Z"
       }
-    ]
+    }
   }
 }
