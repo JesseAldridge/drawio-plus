@@ -106,6 +106,14 @@ function color_nodes(doc_elem, new_mxfile_obj, modified_agg) {
         }
       }
 
+      // Ignore nodes that are not a shade of grey
+      if(style_obj.fillColor) {
+        const hex_str = style_obj.fillColor.slice(1)
+        if(!((hex_str[0] == hex_str[2] == hex_str[4]) &&
+             (hex_str[1] == hex_str[3] == hex_str[5])))
+          return
+      }
+
       const cell = new_mxfile_obj[diagram_elem.attr('name')].cell_id_to_cell[cell_elem.attr("id")]
       if(!cell)
         return
@@ -138,31 +146,24 @@ function color_nodes(doc_elem, new_mxfile_obj, modified_agg) {
 
 function inflate_diagram(orig_path, inflated_path, prev_mxfile_obj) {
   shell.mkdir('-p', path.dirname(inflated_path));
+  const xml = fs.readFileSync(orig_path, 'utf8');
 
-  fs.readFile(orig_path, 'utf8', function(err, xml) {
-    const doc_elem = cheerio.load(xml, {
-      xmlMode: true,
-      decodeEntities: false,
-      lowerCaseAttributeNames: false,
-      lowerCaseTags: false
-    });
-    const results = process_mxfile_elem(doc_elem, prev_mxfile_obj);
-    const new_mxfile_obj = results.new_mxfile_obj
-    const modified_agg = results.modified_agg
-    const inflated_json = JSON.stringify(new_mxfile_obj, null, 2)
-    console.log('writing to:', inflated_path);
-    fs.writeFile(inflated_path, inflated_json, function() {
-      console.log('wrote:', inflated_path);
-    });
-
-    color_nodes(doc_elem, new_mxfile_obj, modified_agg)
-
-    fs.writeFile(orig_path, doc_elem.html('mxfile'), function(err) {
-      if(err) {
-        console.log('error rewriting drawio file:', err);
-      }
-    });
+  const doc_elem = cheerio.load(xml, {
+    xmlMode: true,
+    decodeEntities: false,
+    lowerCaseAttributeNames: false,
+    lowerCaseTags: false
   });
+  const results = process_mxfile_elem(doc_elem, prev_mxfile_obj);
+  const new_mxfile_obj = results.new_mxfile_obj
+  const modified_agg = results.modified_agg
+  const inflated_json = JSON.stringify(new_mxfile_obj, null, 2)
+  console.log('writing to:', inflated_path);
+  fs.writeFileSync(inflated_path, inflated_json);
+
+  color_nodes(doc_elem, new_mxfile_obj, modified_agg)
+
+  fs.writeFileSync(orig_path, doc_elem.html('mxfile'));
 }
 
 if(typeof(exports) != 'undefined')

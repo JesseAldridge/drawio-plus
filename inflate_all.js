@@ -21,8 +21,9 @@ function main(original_dir_path) {
     const json_paths = glob.sync(path.join(inflated_dir_path, '**/*.json'))
     for(let i = 0; i < json_paths.length; i++) {
       let base_path = json_paths[i].split(inflated_dir_path + '/')[1];
+      const text = fs.readFileSync(json_paths[i], 'utf8')
       try {
-        mxfile_sub_path_to_mxfile[base_path] = JSON.parse(fs.readFileSync(json_paths[i], 'utf8'))
+        mxfile_sub_path_to_mxfile[base_path] = JSON.parse(text)
       } catch(SytaxError) {
         continue
       }
