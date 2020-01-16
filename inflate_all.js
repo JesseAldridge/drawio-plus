@@ -14,15 +14,18 @@ function main(original_dir_path) {
   console.log(`${new Date()} inflating all diagrams...`)
 
   const inflated_dir_path = expand_home_dir('~/inflated_diagrams');
-
   const mxfile_sub_path_to_mxfile = {}
 
   if (fs.existsSync(inflated_dir_path)) {
     // Read previously inflated files
-    const json_paths = glob.sync(path.join(inflated_dir_path, '**/*.' + '.json'))
+    const json_paths = glob.sync(path.join(inflated_dir_path, '**/*.json'))
     for(let i = 0; i < json_paths.length; i++) {
-      let base_path = json_paths[i].split(inflated_dir_path)[1];
-      mxfile_sub_path_to_mxfile[base_path] = JSON.parse(fs.readFileSync(json_paths[i], 'utf8'))
+      let base_path = json_paths[i].split(inflated_dir_path + '/')[1];
+      try {
+        mxfile_sub_path_to_mxfile[base_path] = JSON.parse(fs.readFileSync(json_paths[i], 'utf8'))
+      } catch(SytaxError) {
+        continue
+      }
     }
 
     // Wipe out the old ones
