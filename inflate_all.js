@@ -14,16 +14,16 @@ function main(original_dir_path) {
   console.log(`${new Date()} inflating all diagrams...`)
 
   const inflated_dir_path = expand_home_dir('~/inflated_diagrams');
-  const mxfile_sub_path_to_mxfile = {}
+  const path_name_to_mxfile = {}
 
   if (fs.existsSync(inflated_dir_path)) {
     // Read previously inflated files
     const json_paths = glob.sync(path.join(inflated_dir_path, '**/*.json'))
     for(let i = 0; i < json_paths.length; i++) {
-      let base_path = json_paths[i].split(inflated_dir_path + '/')[1];
+      let base_path = us(json_paths[i].split(inflated_dir_path + '/')[1]).strLeftBack(".").value();
       const text = fs.readFileSync(json_paths[i], 'utf8')
       try {
-        mxfile_sub_path_to_mxfile[base_path] = JSON.parse(text)
+        path_name_to_mxfile[base_path] = JSON.parse(text)
       } catch(SytaxError) {
         continue
       }
@@ -38,24 +38,23 @@ function main(original_dir_path) {
 
   console.log(`converting all .drawio files at: ${original_dir_path}`)
 
-  inflate_all(original_dir_path, inflated_dir_path, mxfile_sub_path_to_mxfile)
+  inflate_all(original_dir_path, inflated_dir_path, path_name_to_mxfile)
 
   console.log(`${new Date()} done`)
 }
 
-function inflate_all(original_dir_path, inflated_dir_path, mxfile_sub_path_to_mxfile) {
+function inflate_all(original_dir_path, inflated_dir_path, path_name_to_mxfile) {
   glob(path.join(original_dir_path, '**/*.drawio'), function (er, paths) {
     for(let i = 0; i < paths.length; i++) {
       const orig_file_path = paths[i];
       console.log('orig_file_path:', orig_file_path);
-      let base_path = orig_file_path.split(original_dir_path)[1];
-      if(!mxfile_sub_path_to_mxfile[base_path])
-        mxfile_sub_path_to_mxfile[base_path] = {
+      let base_path = us(orig_file_path.split(original_dir_path)[1]).strLeftBack('.').value();
+      if(!path_name_to_mxfile[base_path])
+        path_name_to_mxfile[base_path] = {
           cell_id_to_cell: {}
         }
-      const prev_mxfile_obj = mxfile_sub_path_to_mxfile[base_path]
-      base_path = us(base_path).strLeftBack(".").value() + '.json'
-      let inflated_file_path = path.join(inflated_dir_path, base_path)
+      const prev_mxfile_obj = path_name_to_mxfile[base_path]
+      let inflated_file_path = path.join(inflated_dir_path, base_path + '.json')
       inflate_diagram.inflate_diagram(orig_file_path, inflated_file_path, prev_mxfile_obj);
     }
   });
