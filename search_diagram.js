@@ -53,9 +53,10 @@ function search_diagram(inflated_dir_path, path_, query_terms, term_to_document_
         })
         term_frequency += cell_match_count
         if(cell_match_count > 0) {
-          if(!tab_to_matching_cells[tab_id])
-            tab_to_matching_cells[tab_id] = []
-          tab_to_matching_cells[tab_id].push(cell.text.substr(0, 80))
+          const human_id = tab.name + ' ' + tab_id
+          if(!tab_to_matching_cells[human_id])
+            tab_to_matching_cells[human_id] = []
+          tab_to_matching_cells[human_id].push(cell.text.substr(0, 80))
         }
       }
     })
