@@ -69,7 +69,7 @@ function process_mxfile_elem(doc_elem, prev_mxfile_obj) {
         last_modified = new Date(Date.parse(last_cell_obj.last_modified))
       }
       else {
-        debugger
+        // debugger
         console.log('yes modified:')
         console.log(last_cell_obj && last_cell_obj.text)
         console.log('new text:', new_cell_obj.text)
