@@ -6,9 +6,9 @@ const stem_words = require('./stem_words.js');
 function search_diagram(inflated_dir_path, path_, query_terms, term_to_document_frequency) {
   // diagram refers to a tab within a .drawio file
   const diagrams_json = fs.readFileSync(path_, 'utf8');
-  let name_to_diagram = null
+  let id_to_diagram = null
   try {
-    name_to_diagram = JSON.parse(diagrams_json)
+    id_to_diagram = JSON.parse(diagrams_json)
   }
   catch(e) {
     console.log('failed to parse json:', path_)
@@ -38,9 +38,9 @@ function search_diagram(inflated_dir_path, path_, query_terms, term_to_document_
     let term_frequency = 0 // the number of times the term occurs in the .drawio file
     const tab_to_matching_cells = {}
 
-    const tab_names = Object.keys(name_to_diagram)
-    tab_names.forEach(function(tab_name) {
-      tab = name_to_diagram[tab_name]
+    const tab_ids = Object.keys(id_to_diagram)
+    tab_ids.forEach(function(tab_id) {
+      tab = id_to_diagram[tab_id]
 
       for(let cell_id in tab.cell_id_to_cell) {
         const cell = tab.cell_id_to_cell[cell_id]
@@ -53,9 +53,9 @@ function search_diagram(inflated_dir_path, path_, query_terms, term_to_document_
         })
         term_frequency += cell_match_count
         if(cell_match_count > 0) {
-          if(!tab_to_matching_cells[tab_name])
-            tab_to_matching_cells[tab_name] = []
-          tab_to_matching_cells[tab_name].push(cell.text.substr(0, 80))
+          if(!tab_to_matching_cells[tab_id])
+            tab_to_matching_cells[tab_id] = []
+          tab_to_matching_cells[tab_id].push(cell.text.substr(0, 80))
         }
       }
     })

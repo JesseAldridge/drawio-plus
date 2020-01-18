@@ -20,6 +20,7 @@ function process_mxfile_elem(doc_elem, prev_mxfile_obj) {
 
   doc_elem('diagram').each(function(diagram_index, diagram_elem_) {
     let diagram_elem = doc_elem(diagram_elem_);
+    let diagram_id = diagram_elem.attr('id')
     let diagram_name = diagram_elem.attr('name')
 
     // try {
@@ -33,8 +34,9 @@ function process_mxfile_elem(doc_elem, prev_mxfile_obj) {
     // diagram_text = unescape_(diagram_text);
     // diagram_text = pd.xml(diagram_text);
 
-    const diagram_obj = new_mxfile_obj[diagram_name] = {
-      cell_id_to_cell: {}
+    const diagram_obj = new_mxfile_obj[diagram_id] = {
+      cell_id_to_cell: {},
+      name: diagram_name,
     }
 
     const new_cell_id_to_cell = diagram_obj.cell_id_to_cell
@@ -60,10 +62,18 @@ function process_mxfile_elem(doc_elem, prev_mxfile_obj) {
         y: geometry_elem.attr('y'),
       }
 
-      const last_cell_obj = ((prev_mxfile_obj[diagram_name] || {}).cell_id_to_cell || {})[cell_id]
+      const last_cell_obj = ((prev_mxfile_obj[diagram_id] || {}).cell_id_to_cell || {})[cell_id]
       let last_modified = new Date()
-      if(last_cell_obj && last_cell_obj.text == new_cell_obj.text)
+
+      if(last_cell_obj && last_cell_obj.text == new_cell_obj.text) {
         last_modified = new Date(Date.parse(last_cell_obj.last_modified))
+      }
+      else {
+        debugger
+        console.log('yes modified:')
+        console.log(last_cell_obj && last_cell_obj.text)
+        console.log('new text:', new_cell_obj.text)
+      }
 
       if(modified_agg.min)
         modified_agg.min = Math.min(last_modified, modified_agg.min)
@@ -114,7 +124,7 @@ function color_nodes(doc_elem, new_mxfile_obj, modified_agg) {
           return
       }
 
-      const cell = new_mxfile_obj[diagram_elem.attr('name')].cell_id_to_cell[cell_elem.attr("id")]
+      const cell = new_mxfile_obj[diagram_elem.attr('id')].cell_id_to_cell[cell_elem.attr("id")]
       if(!cell)
         return
       const last_modified = Date.parse(cell.last_modified)
@@ -174,7 +184,7 @@ if(require.main === module) {
     "Tab 1": {
       "cell_id_to_cell": {
         "i4sGg8bSkyUIFC7NJkLE-1": {
-          "text": "this is a test diagram",
+          "text": "thy is a test diagram",
           "x": "284",
           "y": "160",
           "last_modified": "2020-01-15T02:53:38.937Z"
@@ -202,7 +212,7 @@ if(require.main === module) {
           "last_modified": "2020-01-15T02:53:38.937Z"
         },
         "MXRy82Ifvxj1utwsVIDY-4": {
-          "text": "xys",
+          "text": "test change",  // I updated this node
           "x": "455",
           "y": "288",
           "last_modified": "2020-01-15T02:53:38.938Z"
@@ -212,4 +222,7 @@ if(require.main === module) {
   }
 
   inflate_diagram('data/test.drawio', 'data/test-inflated.json', prev_mxfile_obj);
+
+  const text = fs.readFileSync('data/test-inflated.json', 'utf8')
+  console.log('all good:', [...text.matchAll('2020-01-15')].length == 4)
 }

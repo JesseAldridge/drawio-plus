@@ -4,10 +4,10 @@
       <root>
         <mxCell id="0" style="fillColor=#ff0000"/>
         <mxCell id="1" parent="0" style="fillColor=#ff0000"/>
-        <mxCell id="i4sGg8bSkyUIFC7NJkLE-1" value="this is a test diagram" style="text=;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fillColor=#ffffff" parent="1" vertex="1">
+        <mxCell id="i4sGg8bSkyUIFC7NJkLE-1" value="thy is a test diagram" style="text=;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fillColor=#ffffff" parent="1" vertex="1">
           <mxGeometry x="284" y="160" width="130" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="i4sGg8bSkyUIFC7NJkLE-2" value="helper" style="text=;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fillColor=#dfdfdf" parent="1" vertex="1">
+        <mxCell id="i4sGg8bSkyUIFC7NJkLE-2" value="help" style="text=;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fillColor=#dfdfdf" parent="1" vertex="1">
           <mxGeometry x="309" y="228" width="50" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="i4sGg8bSkyUIFC7NJkLE-3" value="" style="endArrow=none;html=1;fillColor=#ff0000" parent="1" source="i4sGg8bSkyUIFC7NJkLE-2" target="i4sGg8bSkyUIFC7NJkLE-1" edge="1">
@@ -30,7 +30,7 @@
         <mxCell id="MXRy82Ifvxj1utwsVIDY-3" value="baz" style="text=;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fillColor=#dfdfdf" vertex="1" parent="MXRy82Ifvxj1utwsVIDY-1">
           <mxGeometry x="392" y="321" width="30" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="MXRy82Ifvxj1utwsVIDY-4" value="xyz" style="text=;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fillColor=#dfdfdf" vertex="1" parent="MXRy82Ifvxj1utwsVIDY-1">
+        <mxCell id="MXRy82Ifvxj1utwsVIDY-4" value="xys" style="text=;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fillColor=#dfdfdf" vertex="1" parent="MXRy82Ifvxj1utwsVIDY-1">
           <mxGeometry x="455" y="288" width="30" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="MXRy82Ifvxj1utwsVIDY-5" value="" style="endArrow=none;html=1;fillColor=#ff0000" edge="1" parent="MXRy82Ifvxj1utwsVIDY-1" source="MXRy82Ifvxj1utwsVIDY-2" target="MXRy82Ifvxj1utwsVIDY-3">
