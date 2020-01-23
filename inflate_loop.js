@@ -72,8 +72,8 @@ function main() {
   const diagrams_path = expand_home_dir(process.argv[2])
   debugger
   read_old_and_inflate(diagrams_path)
-  console.log('inflated, sleeping for 1 hour...')
-  setTimeout(main, 1000 * 60 * 60)
+  console.log('inflated, sleeping for 2 hours...')
+  setTimeout(main, 1000 * 60 * 60 * 2)
 }
 
 if(require.main === module) {
