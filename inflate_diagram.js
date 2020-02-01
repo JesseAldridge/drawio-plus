@@ -69,7 +69,6 @@ function process_mxfile_elem(doc_elem, prev_mxfile_obj) {
         last_modified = new Date(Date.parse(last_cell_obj.last_modified))
       }
       else {
-        // debugger
         console.log('yes modified:')
         console.log(last_cell_obj && last_cell_obj.text)
         console.log('new text:', new_cell_obj.text)
@@ -170,7 +169,7 @@ function inflate_diagram(orig_path, inflated_path, prev_mxfile_obj) {
   const inflated_json = JSON.stringify(new_mxfile_obj, null, 2)
   console.log('writing to:', inflated_path);
   fs.writeFileSync(inflated_path, inflated_json);
-
+  doc_elem('mxfile').attr('compressed', false)
   color_nodes(doc_elem, new_mxfile_obj, modified_agg)
 
   fs.writeFileSync(orig_path, doc_elem.html('mxfile'));
