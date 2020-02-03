@@ -2,16 +2,25 @@
   "1dMstaCY08wY50I3MFBW": {
     "cell_id_to_cell": {
       "i4sGg8bSkyUIFC7NJkLE-1": {
-        "text": "thy is a test diagram",
+        "original_text": "thy is a test diagram swimming",
+        "stemmed_text": "thy is a test diagram swim",
         "x": "284",
         "y": "160",
-        "last_modified": "2020-02-01T01:02:32.472Z"
+        "last_modified": "2020-01-15T02:53:38.937Z"
       },
       "i4sGg8bSkyUIFC7NJkLE-2": {
-        "text": "help",
+        "original_text": "help",
+        "stemmed_text": "help",
         "x": "309",
         "y": "228",
-        "last_modified": "2020-02-01T01:02:32.475Z"
+        "last_modified": "2020-01-15T02:53:38.937Z"
+      },
+      "ievcRmNj5epkqje6sv5z-1": {
+        "original_text": "cors",
+        "stemmed_text": "cor",
+        "x": "269",
+        "y": "300",
+        "last_modified": "2020-02-03T01:09:23.040Z"
       }
     },
     "name": "Tab 1"
@@ -19,22 +28,25 @@
   "GHfeHe2o456X1Uvl4aY1": {
     "cell_id_to_cell": {
       "MXRy82Ifvxj1utwsVIDY-2": {
-        "text": "bar",
+        "original_text": "bar",
+        "stemmed_text": "bar",
         "x": "278",
         "y": "327",
-        "last_modified": "2020-02-01T01:02:32.475Z"
+        "last_modified": "2020-01-15T02:53:38.937Z"
       },
       "MXRy82Ifvxj1utwsVIDY-3": {
-        "text": "baz",
+        "original_text": "baz",
+        "stemmed_text": "baz",
         "x": "392",
         "y": "321",
-        "last_modified": "2020-02-01T01:02:32.475Z"
+        "last_modified": "2020-01-15T02:53:38.937Z"
       },
       "MXRy82Ifvxj1utwsVIDY-4": {
-        "text": "xys",
+        "original_text": "xys",
+        "stemmed_text": "xys",
         "x": "455",
         "y": "288",
-        "last_modified": "2020-02-01T01:02:32.476Z"
+        "last_modified": "2020-02-03T01:09:33.050Z"
       }
     },
     "name": "Tab 2"

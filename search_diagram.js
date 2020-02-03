@@ -3,7 +3,7 @@ const path = require('path');
 
 const stem_words = require('./stem_words.js');
 
-function search_diagram(inflated_dir_path, path_, query_terms, term_to_document_frequency) {
+function search_diagram(inflated_dir_path, path_, query_term_objs, term_to_document_frequency) {
   // diagram refers to a tab within a .drawio file
   const diagrams_json = fs.readFileSync(path_, 'utf8');
   let id_to_diagram = null
@@ -28,10 +28,10 @@ function search_diagram(inflated_dir_path, path_, query_terms, term_to_document_
   let sum_term_score = 0;
   const term_to_tab_to_matching_cells = {};
   const term_to_score = {};
-  query_terms.forEach(function(query_term) {
+  query_term_objs.forEach(function(query_term_obj) {
     let path_score = 0 // is the term in the path of the .drawio file
     path_tokens.forEach(function(path_token) {
-      if(path_token == query_term)
+      if(path_token == query_term_obj.original)
         path_score += 1
     })
 
@@ -45,31 +45,42 @@ function search_diagram(inflated_dir_path, path_, query_terms, term_to_document_
       for(let cell_id in tab.cell_id_to_cell) {
         const cell = tab.cell_id_to_cell[cell_id]
         // tokens are stemmed during inflation
-        const cell_tokens = cell.text.split(' ')
+        const stemmed_tokens = cell.stemmed_text.split(' ')
+        const original_tokens = cell.original_text.split(' ')
         let cell_match_count = 0
-        cell_tokens.forEach(function(cell_token) {
-          if(cell_token == query_term)
+
+        stemmed_tokens.forEach(function(cell_token) {
+          if(cell_token == query_term_obj.stemmed.toLowerCase())
             cell_match_count += 1
         })
+
+        // matching original token is much better ("cors" vs "core")
+        original_tokens.forEach(function(cell_token) {
+          // Todo: do toLowerCase in stemming if we're not already
+          if(cell_token.toLowerCase() == query_term_obj.original.toLowerCase())
+            cell_match_count += 8
+        })
+
         term_frequency += cell_match_count
         if(cell_match_count > 0) {
           const human_id = tab.name + ' ' + tab_id
           if(!tab_to_matching_cells[human_id])
             tab_to_matching_cells[human_id] = []
-          tab_to_matching_cells[human_id].push(cell.text.substr(0, 80))
+          tab_to_matching_cells[human_id].push(cell.original_text.substr(0, 80))
+          tab_to_matching_cells[human_id].push(cell.stemmed_text.substr(0, 80))
         }
       }
     })
 
     if(term_frequency > 0) {
-      if(!term_to_document_frequency[query_term])
-        term_to_document_frequency[query_term] = 0;
-      term_to_document_frequency[query_term] += 1;
-      term_to_tab_to_matching_cells[query_term] = tab_to_matching_cells
+      if(!term_to_document_frequency[query_term_obj.original])
+        term_to_document_frequency[query_term_obj.original] = 0;
+      term_to_document_frequency[query_term_obj.original] += 1;
+      term_to_tab_to_matching_cells[query_term_obj.original] = tab_to_matching_cells
     }
 
     const term_score = term_frequency + path_score * 80;
-    term_to_score[query_term] = term_score;
+    term_to_score[query_term_obj.original] = term_score;
     sum_term_score += term_score;
   });
 

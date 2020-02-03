@@ -11,13 +11,17 @@ const search_diagram = require('./search_diagram.js')
 const inflated_dir_path = expand_home_dir('~/inflated_diagrams/');
 const inflated_paths = glob.sync(inflated_dir_path + '**/*.json');
 
-const query_terms = process.argv.slice(2);
-for(let i = 0; i < query_terms.length; i++) {
-  // query_terms[i] = stemmer.stemmer(query_terms[i].toLowerCase());
-  query_terms[i] = natural.LancasterStemmer.stem(query_terms[i].toLowerCase())
+const query_term_strings = process.argv.slice(2);
+const query_term_objs = []
+for(let i = 0; i < query_term_strings.length; i++) {
+  const lower_term = query_term_strings[i].toLocaleLowerCase()
+  query_term_objs[i] = {
+    original: lower_term,
+    stemmed: natural.LancasterStemmer.stem(lower_term),
+  }
 }
 
-console.log('query terms:', query_terms)
+console.log('query terms:', query_term_objs)
 
 // Search content
 const matches = [];
@@ -27,7 +31,7 @@ inflated_paths.forEach(function(path_) {
   const match = search_diagram.search_diagram(
     inflated_dir_path,
     path_,
-    query_terms,
+    query_term_objs,
     term_to_document_frequency
   )
   if(match)
