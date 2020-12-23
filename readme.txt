@@ -11,6 +11,6 @@ ln -s /Users/jessealdridge/Dropbox/drawio_plus/search_diagrams.js /Users/jesseal
 ```
 
 Run the inflater loop in the background:
-`python background_inflater.py 2>&1 | tee ~/drawio_plus.log`
+`node inflate_loop.js 2>&1 | tee ~/drawio_plus.log`
 
 Now you can run `dgs <query>` in order to search your diagrams.

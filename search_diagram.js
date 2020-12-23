@@ -26,12 +26,13 @@ function search_diagram(inflated_dir_path, path_, query_term_objs, term_to_docum
     })
 
   let sum_term_score = 0;
+  let diagram_token_count = 0;
   const term_to_tab_to_matching_cells = {};
   const term_to_score = {};
   query_term_objs.forEach(function(query_term_obj) {
     let path_score = 0 // is the term in the path of the .drawio file
     path_tokens.forEach(function(path_token) {
-      if(path_token == query_term_obj.original)
+      if(path_token == query_term_obj.stemmed)
         path_score += 1
     })
 
@@ -79,7 +80,7 @@ function search_diagram(inflated_dir_path, path_, query_term_objs, term_to_docum
       term_to_tab_to_matching_cells[query_term_obj.original] = tab_to_matching_cells
     }
 
-    const term_score = term_frequency + path_score * 80;
+    const term_score = Math.log(term_frequency) + path_score * 80;
     term_to_score[query_term_obj.original] = term_score;
     sum_term_score += term_score;
   });
